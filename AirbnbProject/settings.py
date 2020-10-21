@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'AirbnbProject2.urls'
+ROOT_URLCONF = 'AirbnbProject.urls'
 
 TEMPLATES = [
     {
