@@ -4,8 +4,71 @@
 
 {% block content %}
 
-    <p>Soy el contenido de index.html</p>
+<form class="form-inline d-flex justify-content-center">
+  
+  <div class="form-group col-sm-2 mt-1">
+    <!-- <label for="city">Ciudad</label> -->
+    <select name="city" id="city" class="form-control">
+      <option value="">Seleccionar ciudad ...</option>
+      <option value="">Ciudad 2</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-2 mt-1">
+    <!-- <label for="capacity">Huespedes</label> -->
+    <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes">
+  </div>
 
+  <div class="form-group col-sm-2 mt-1">
+    <!-- <label for="price" >Precio</label> -->
+    <input id="price" type="number" class="form-control" placeholder="Precio">
+  </div>
+
+  <div class="form-group col-sm-2 mt-1">
+    <!-- <label for="date">Fecha</label> -->
+    <input id="date" type="date" class="form-control">
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-success">Filtrar</button>
+  </div>
+
+</form>
+
+<div class="container">
+  <div class="card-group">
+    <div class="card mr-3">
+      <div class="card-header">
+        <img src="/static/img/house.jpg" alt="">
+      </div>
+      <div class="card-body">
+        <h5>Casa 1</h5>
+        Descripcion
+      </div>
+    </div>
+    <div class="card mr-3">
+      <div class="card-header">
+        <img src="/static/img/house.jpg" alt="">
+      </div>
+      <div class="card-body">
+        <h5>Casa 2</h5>
+        Descripcion
+      </div>
+    </div>
+    <div class="card mr-3">
+      <div class="card-header">
+        <img src="/static/img/house.jpg" alt="">
+      </div>
+      <div class="card-body">
+        <h5>Casa 3</h5>
+        Descripcion
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+<br><br>
     <p> Mostrando contenido de variable del controller: </p>
     <p> {{ var }} </p>
 
