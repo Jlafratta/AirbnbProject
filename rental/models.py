@@ -6,6 +6,9 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Property(models.Model):
     title = models.CharField(max_length=100)
@@ -15,9 +18,15 @@ class Property(models.Model):
     # FK que vincula con City
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Reservation(models.Model):
     total_price = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return self.total_price
 
 
 class ReservationDates(models.Model):
@@ -25,4 +34,6 @@ class ReservationDates(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.date
 
