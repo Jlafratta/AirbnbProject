@@ -1,10 +1,17 @@
 from django.shortcuts import render
+from .models import City
+from .models import Property
 
 
 # Create your views here.
 def index(request):
-    var = "Soy la variable enviada desde el controller"
-    return render(request, 'rental/index.html', {'var': var})
+    cities = City.objects.order_by('name')
+    properties = Property.objects.all()
+    context = {
+        'cities': cities,
+        'properties': properties
+    }
+    return render(request, 'rental/index.html', context)
 
 
 def property_data(request, property_id):
