@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import City
 from .models import Property
 
@@ -15,9 +15,5 @@ def index(request):
 
 
 def property_data(request, property_id):
-
-    context = {
-        'description': "Info de la casa",
-        'property_id': property_id
-    }
-    return render(request, 'rental/propertyData.html', context)
+    prop = get_object_or_404(Property, pk=property_id)
+    return render(request, 'rental/propertyData.html', {'property': prop})

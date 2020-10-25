@@ -14,6 +14,7 @@ class Property(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     capacity = models.IntegerField(default=0)
+    dormitories = models.IntegerField(default=0)
     daily_price = models.FloatField(default=0.0)
     # FK que vincula con City
     city = models.ForeignKey(City, on_delete=models.CASCADE)

@@ -45,12 +45,12 @@
                     <!-- <img src="/static/img/house.jpg" alt=""> -->
                 </div>
                 <div class="card-body">
-                    <h3 class="mb-2">Terrible caserón <br><small><i class="now-ui-icons location_pin"></i> Mar del Plata - Casa entera</small></h3>
-                    <span class="mr-2"><i class="now-ui-icons users_single-02"></i> 4 huéspedes</span>
+                    <h3 class="mb-2"> {{ property.title }} <br><small><i class="now-ui-icons location_pin"></i> {{ property.city.name }} <!-- - Casa entera --></small></h3>
+                    <span class="mr-2"><i class="now-ui-icons users_single-02"></i> {{ property.capacity }} huéspedes</span>
                     <span><i class="now-ui-icons ui-2_time-alarm"></i> 2 dormitorios</span>
-                    <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="mt-2">{{ property.description }}</p>
                     <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
+                    <span class="badge badge-default">Aire acondicionado</span>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 <div class="card-header">
                     <nav class="navbar navbar-expand-lg bg-danger mb-1">
                         <div class="container d-flex justify-content-center">
-                            <h3 class="text-light mb-1"><strong>$ 3750</strong> por noche</h3>
+                            <h3 class="text-light mb-1"><strong>$ {{ property.daily_price }}</strong> por noche</h3>
                         </div>
                     </nav>
                 </div>
@@ -67,17 +67,17 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="llegada">Llegada</label>
-                            <input type="date" name="llegada" class="form-control" value="2020-10-08">
+                            <input type="date" id="llegada" name="llegada" class="form-control" value="2020-10-08">
                         </div> 
                         <div class="col-sm-6">
                             <label for="salida">Salida</label>
-                            <input type="date" name="salida" class="form-control" value="2020-10-10">
+                            <input type="date" id="salida" name="salida" class="form-control" value="2020-10-10">
                         </div>
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-sm-12">
                             <label for="capacity">Huéspedes</label>
-                            <select name="capacity" class="form-control">
+                            <select name="capacity" id="capacity" class="form-control">
                                 <option value="">4</option>
                                 <option value="">3</option>
                                 <option value="">2</option>
