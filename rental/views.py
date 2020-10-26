@@ -16,4 +16,8 @@ def index(request):
 
 def property_data(request, property_id):
     prop = get_object_or_404(Property, pk=property_id)
-    return render(request, 'rental/propertyData.html', {'property': prop})
+    context = {
+        'property': prop,
+        'capacity': range(1, prop.capacity + 1)
+    }
+    return render(request, 'rental/propertyData.html', context)

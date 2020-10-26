@@ -47,7 +47,7 @@
                 <div class="card-body">
                     <h3 class="mb-2"> {{ property.title }} <br><small><i class="now-ui-icons location_pin"></i> {{ property.city.name }} <!-- - Casa entera --></small></h3>
                     <span class="mr-2"><i class="now-ui-icons users_single-02"></i> {{ property.capacity }} huéspedes</span>
-                    <span><i class="now-ui-icons ui-2_time-alarm"></i> 2 dormitorios</span>
+                    <span><i class="now-ui-icons ui-2_time-alarm"></i> {{ property.dormitories }} dormitorios</span>
                     <p class="mt-2">{{ property.description }}</p>
                     <span class="badge badge-default">Internet</span>
                     <span class="badge badge-default">Aire acondicionado</span>
@@ -78,10 +78,9 @@
                         <div class="col-sm-12">
                             <label for="capacity">Huéspedes</label>
                             <select name="capacity" id="capacity" class="form-control">
-                                <option value="">4</option>
-                                <option value="">3</option>
-                                <option value="">2</option>
-                                <option value="">1</option>
+                                {% for i in capacity %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
