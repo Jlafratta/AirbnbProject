@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 # Create your models here.
 
@@ -25,19 +26,30 @@ class Property(models.Model):
 
 class Reservation(models.Model):
     total_price = models.FloatField(default=0.0)
-    date = models.DateField
-    code = models.CharField(max_length=10)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    date = models.DateField(null=True)
+    code = models.CharField(max_length=10, default='')
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
-        return self.total_price
+        return self.code
 
 
-class ReservationDates(models.Model):
-    date = models.DateField
+class ReservationDate(models.Model):
+    date = models.DateField(null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.date
+        return f"Reserva: {self.date}"
+
+
+class ReservationDateInline(admin.TabularInline):
+    model = ReservationDate
+    fk_name = 'property'
+    max_num = 7
+
+
+class PropertyAdmin(admin.ModelAdmin):
+    inlines = [ReservationDateInline, ]
+
 
