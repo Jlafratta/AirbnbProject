@@ -1,15 +1,9 @@
 from django.db import models
 from django.contrib import admin
 from services.models import Service
+from locations.models import City
 
 # Create your models here.
-
-
-class City(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 
 class Property(models.Model):

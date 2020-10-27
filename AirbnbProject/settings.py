@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rental.apps.RentalConfig',     # Agrega la app rental al proyecto
     'services.apps.ServicesConfig',     # Agrega la app services al proyecto
+    'locations.apps.LocationsConfig',   # Agrega la app locations al proyecto
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
