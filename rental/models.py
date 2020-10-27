@@ -25,6 +25,9 @@ class Property(models.Model):
 
 class Reservation(models.Model):
     total_price = models.FloatField(default=0.0)
+    date = models.DateField
+    code = models.CharField(max_length=10)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.total_price
@@ -33,7 +36,7 @@ class Reservation(models.Model):
 class ReservationDates(models.Model):
     date = models.DateField
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.date
