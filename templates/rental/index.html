@@ -40,20 +40,8 @@
 
 <div class="container">
   <div class="card-group">
-    <div class="col-md-4">
-      <div class="card mr-3">
-        <div class="card-header">
-          <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
-        </div>
-        <div class="card-body">
-          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> 4</span></h6>
-          <a href="property/1"><h5><strong>Casa 1</strong></h5></a>
-          <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
-          <p class="mt-2 mb-1"><strong>$ 3750</strong> por noche</p>
-        </div>
-      </div>
-    </div>
+
+    {% for property in properties %}
 
     <div class="col-md-4">
       <div class="card mr-3">
@@ -61,68 +49,19 @@
           <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
         </div>
         <div class="card-body">
-          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> 4</span></h6>
-          <a href="property/1"><h5><strong>Casa 1</strong></h5></a>
+          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>
+          <a href="property/1"><h5><strong>{{ property.title }}</strong></h5></a>
           <span class="badge badge-default">Internet</span>
           <span class="badge badge-default">Aire acondicionado</span>
-          <p class="mt-2 mb-1"><strong>$ 3750</strong> por noche</p>
+          <p class="mt-2 mb-1"><strong>$ {{ property.daily_price }}</strong> por noche</p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="card mr-3">
-        <div class="card-header">
-          <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
-        </div>
-        <div class="card-body">
-          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> 4</span></h6>
-          <a href="property/1"><h5><strong>Casa 1</strong></h5></a>
-          <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
-          <p class="mt-2 mb-1"><strong>$ 3750</strong> por noche</p>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
 
-    <div class="col-md-4">
-      <div class="card mr-3">
-        <div class="card-header">
-          <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
-        </div>
-        <div class="card-body">
-          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> 4</span></h6>
-          <a href="property/1"><h5><strong>Casa 1</strong></h5></a>
-          <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
-          <p class="mt-2 mb-1"><strong>$ 3750</strong> por noche</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card mr-3">
-        <div class="card-header">
-          <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
-        </div>
-        <div class="card-body">
-          <h6><span>Casa completa </span> - <span><i class="now-ui-icons users_single-02"></i> 4</span></h6>
-          <a href="property/1"><h5><strong>Casa 1</strong></h5></a>
-          <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
-          <p class="mt-2 mb-1"><strong>$ 3750</strong> por noche</p>
-        </div>
-      </div>
-    </div>
-    
-    
   </div>
-  
 </div>
-
-<br><br>
-    <p> Mostrando contenido de variable del controller: </p>
-    <p> {{ var }} </p>
 
 {% endblock %}
 
