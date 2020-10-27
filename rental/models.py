@@ -45,12 +45,6 @@ class ReservationDateInline(admin.TabularInline):
     max_num = 7
 
 
-'''class ServiceInline(admin.TabularInline):
-    model = Service
-    fk_name = 'property'
-    max_num = 10'''
-
-
 class PropertyAdmin(admin.ModelAdmin):
     inlines = [ReservationDateInline, ]
 

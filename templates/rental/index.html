@@ -4,26 +4,26 @@
 
 {% block content %}
 
-<form class="form-inline d-flex justify-content-center">
-  
+<form action="{% url 'rental:filter_by' %}" method="post" class="form-inline d-flex justify-content-center">
+{% csrf_token %}
   <div class="form-group col-sm-2 mt-1">
     <!-- <label for="city">Ciudad</label> -->
-    <select name="city" id="city" class="form-control">
+    <select name="city_id" id="city" class="form-control">
       <option value="">Seleccionar ciudad ...</option>
       {% for city in cities %}
-      <option value="city.id">{{ city.name }}</option>
+      <option value="{{ city.id }}">{{ city.name }}</option>
       {% endfor %}
-
     </select>
   </div>
+
   <div class="form-group col-sm-2 mt-1">
     <!-- <label for="capacity">Huespedes</label> -->
-    <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes">
+    <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes" name="capacity">
   </div>
 
   <div class="form-group col-sm-2 mt-1">
     <!-- <label for="price" >Precio</label> -->
-    <input id="price" type="number" class="form-control" placeholder="Precio">
+    <input id="price" type="number" class="form-control" placeholder="Precio" name="price">
   </div>
 
   <div class="form-group col-sm-2 mt-1">
@@ -46,11 +46,11 @@
     <div class="col-md-4">
       <div class="card mr-3">
         <div class="card-header">
-          <a href="property/{{ property.id }}"><img src="/static/img/house.jpg" alt=""></a>
+          <a href="{% url 'rental:propertyData' property.id %}"><img src="/static/img/house.jpg" alt=""></a>
         </div>
         <div class="card-body">
           <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>
-          <a href="property/{{ property.id }}"><h5><strong>{{ property.title }}</strong></h5></a>
+          <a href=" {% url 'rental:propertyData' property.id %}"><h5><strong>{{ property.title }}</strong></h5></a>
           {% for service in property.services.all %}
             <span class="badge badge-default">{{ service.name }}</span>
           {% endfor %}
