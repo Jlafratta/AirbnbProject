@@ -49,8 +49,9 @@
                     <span class="mr-2"><i class="now-ui-icons users_single-02"></i> {{ property.capacity }} huéspedes</span>
                     <span><i class="now-ui-icons ui-2_time-alarm"></i> {{ property.dormitories }} dormitorios</span>
                     <p class="mt-2">{{ property.description }}</p>
-                    <span class="badge badge-default">Internet</span>
-                    <span class="badge badge-default">Aire acondicionado</span>
+                    {% for service in property.services.all %}
+                        <span class="badge badge-default">{{ service.name }}</span>
+                    {% endfor %}
                 </div>
             </div>
         </div>

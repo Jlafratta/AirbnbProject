@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import admin
+from services.models import Service
 
 # Create your models here.
 
@@ -19,6 +20,7 @@ class Property(models.Model):
     daily_price = models.FloatField(default=0.0)
     # FK que vincula con City
     city = models.ForeignKey(City, on_delete=models.CASCADE)
+    services = models.ManyToManyField(Service)
 
     def __str__(self):
         return self.title
@@ -47,6 +49,12 @@ class ReservationDateInline(admin.TabularInline):
     model = ReservationDate
     fk_name = 'property'
     max_num = 7
+
+
+'''class ServiceInline(admin.TabularInline):
+    model = Service
+    fk_name = 'property'
+    max_num = 10'''
 
 
 class PropertyAdmin(admin.ModelAdmin):

@@ -46,13 +46,14 @@
     <div class="col-md-4">
       <div class="card mr-3">
         <div class="card-header">
-          <a href="property/1"><img src="/static/img/house.jpg" alt=""></a>
+          <a href="property/{{ property.id }}"><img src="/static/img/house.jpg" alt=""></a>
         </div>
         <div class="card-body">
           <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>
-          <a href="property/1"><h5><strong>{{ property.title }}</strong></h5></a>
-          <span class="badge badge-default">Internet</span>
-          <span class="badge badge-default">Aire acondicionado</span>
+          <a href="property/{{ property.id }}"><h5><strong>{{ property.title }}</strong></h5></a>
+          {% for service in property.services.all %}
+            <span class="badge badge-default">{{ service.name }}</span>
+          {% endfor %}
           <p class="mt-2 mb-1"><strong>$ {{ property.daily_price }}</strong> por noche</p>
         </div>
       </div>
