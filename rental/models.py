@@ -8,13 +8,13 @@ from locations.models import City
 
 class Property(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=250)
+    description = models.TextField(max_length=450)
     capacity = models.IntegerField(default=0)
     dormitories = models.IntegerField(default=0)
     daily_price = models.FloatField(default=0.0)
     # FK que vincula con City
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    services = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, blank=True)
 
     def __str__(self):
         return self.title
@@ -33,7 +33,7 @@ class Reservation(models.Model):
     total_price = models.FloatField(default=0.0)
     date = models.DateField(null=True)
     code = models.CharField(max_length=10, default='')
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, default=None)
+    property = models.ForeignKey(Property, related_name='reservations', on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.code
@@ -41,7 +41,7 @@ class Reservation(models.Model):
 
 class ReservationDate(models.Model):
     date = models.DateField(null=True)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=True)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
