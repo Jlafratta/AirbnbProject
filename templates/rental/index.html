@@ -6,19 +6,51 @@
 
 <form action="{% url 'rental:filter_by' %}" method="post" class="form-inline d-flex justify-content-center">
 {% csrf_token %}
-  <div class="form-group col-sm-2 mt-1">
-    <!-- <label for="city">Ciudad</label> -->
-    <select name="city_id" id="city" class="form-control">
-      <option value="">Seleccionar ciudad ...</option>
-      {% for city in cities %}
-      <option value="{{ city.id }}">{{ city.name }}</option>
-      {% endfor %}
-    </select>
-  </div>
+  <!--<div class="col-sm-2 mt-1">
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="now-ui-icons users_single-02"></i>
+        </span>
+        <label for="city">Ciudad</label>
+        <select name="city_id" id="city" class="form-control">
+          <option value="">Seleccionar ciudad ...</option>
+          {% for city in cities %}
+          <option value="{{ city.id }}">{{ city.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div> -->
 
-  <div class="form-group col-sm-2 mt-1">
-    <!-- <label for="capacity">Huespedes</label> -->
-    <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes" name="capacity">
+  <div class="col-sm-3 col-lg-3 inline-form-margin">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="now-ui-icons location_pin"></i></span>
+      </div>
+      <select name="city_id" id="city" class="form-control">
+        <option value="">Seleccionar ciudad ...</option>
+        {% for city in cities %}
+        <option value="{{ city.id }}">{{ city.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="col-sm-3 col-lg-3 inline-form-margin">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
+      </div>
+      <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes" name="capacity">
+    </div>
+  </div>
+  <div class="col-sm-3 col-lg-3 inline-form-margin">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="now-ui-icons ui-1_calendar-60"></i></span>
+      </div>
+      <input id="date" type="date" class="form-control" name="date">
+    </div>
   </div>
 
   <!--
@@ -27,13 +59,10 @@
     <input id="price" type="number" class="form-control" placeholder="Precio" name="max_price">
   </div>
   -->
-  <div class="form-group col-sm-2 mt-1">
-    <!-- <label for="date">Fecha</label> -->
-    <input id="date" type="date" class="form-control" name="date">
-  </div>
+
 
   <div>
-    <button type="submit" class="btn btn-danger font-weight-bold text-uppercase">Filtrar</button>
+    <button type="submit" class="btn btn-danger btn-round font-weight-bold text-uppercase"> <i class="now-ui-icons ui-1_zoom-bold font-weight-bold"></i> Buscar </button>
   </div>
 
 </form>
@@ -55,7 +84,7 @@
           </a>
         </div>
         <div class="card-body">
-          <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>
+          <h6 class="text-muted"><span class="mr-1"><i class="now-ui-icons location_pin mr-1"> </i>{{ property.city.name }}</span> <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>
           <a href=" {% url 'rental:propertyData' property.id %}"><h5><strong>{{ property.title }}</strong></h5></a>
           {% for service in property.services.all %}
             <span class="badge badge-default">{{ service.name }}</span>
