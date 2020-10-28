@@ -19,6 +19,8 @@ def filter_by(request):
 
     if request.method == 'POST':
         properties = filter_properties(request.POST['city_id'], request.POST['capacity'], request.POST['date'])
+    else:
+        properties = Property.objects.all()     # Si hay falla en el metodo del formulario, no filtra
 
     context = {
         'cities': City.objects.order_by('name'),
@@ -27,7 +29,7 @@ def filter_by(request):
     return render(request, 'rental/index.html', context)
 
 
-def filter_properties(city_id, capacity, date): # FALTARIA AGREGAR FILTRO X FECHA
+def filter_properties(city_id, capacity, date):  # Metodo de filtrado (falta que filtre por fecha)
     if city_id and capacity:
         return Property.objects.filter(city__id=city_id).filter(capacity=capacity)
     elif city_id:

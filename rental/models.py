@@ -57,7 +57,7 @@ class ReservationDateInline(admin.TabularInline):
 class PropertyImageInline(admin.TabularInline):
     model = PropertyImage
     fk_name = 'property'
-    max_num = 3
+    max_num = 10
 
 
 class PropertyAdmin(admin.ModelAdmin):
