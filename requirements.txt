@@ -1,0 +1,6 @@
+Django~=2.2
+
+Librerias agregadas al proyecto:
+
+    -   Pillow: manejo de imagenes para las Propiedades
+        -> "pip install Pillow""

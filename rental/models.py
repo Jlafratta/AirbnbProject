@@ -20,6 +20,15 @@ class Property(models.Model):
         return self.title
 
 
+class PropertyImage(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to="properties", null=True)
+    short_description = models.CharField(max_length=70, default=None, null=True)
+
+    def __str__(self):
+        return self.image.name
+
+
 class Reservation(models.Model):
     total_price = models.FloatField(default=0.0)
     date = models.DateField(null=True)
@@ -45,7 +54,13 @@ class ReservationDateInline(admin.TabularInline):
     max_num = 7
 
 
+class PropertyImageInline(admin.TabularInline):
+    model = PropertyImage
+    fk_name = 'property'
+    max_num = 3
+
+
 class PropertyAdmin(admin.ModelAdmin):
-    inlines = [ReservationDateInline, ]
+    inlines = [ReservationDateInline, PropertyImageInline, ]
 
 
