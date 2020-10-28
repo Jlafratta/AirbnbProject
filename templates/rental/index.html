@@ -43,11 +43,16 @@
   <div class="card-group">
 
     {% for property in properties %}
-
     <div class="col-md-4">
       <div class="card mr-3">
         <div class="card-header">
-          <a href="{% url 'rental:propertyData' property.id %}"><img src="/static/img/house.jpg" alt=""></a>
+          <a href="{% url 'rental:propertyData' property.id %}">
+            {% if property.images.first is not None %}
+            <img src="/static/media/{{ property.images.first }}" alt="{{ property.images.first}}">
+            {% else %}
+            <img src="/static/img/picture-not-available.jpg" alt="Imagen no disponible">
+            {% endif %}
+          </a>
         </div>
         <div class="card-body">
           <h6><span>Casa completa</span> - <span><i class="now-ui-icons users_single-02"></i> {{ property.capacity }}</span></h6>

@@ -17,7 +17,7 @@
                         </ol>
 
                         <div class="carousel-inner" role="listbox">
-                            {% for prop_img in property_images %}
+                            {% for prop_img in property.images.all %}
                             <div class="carousel-item {% if forloop.first %} active {% endif %}">
                                 <img class="d-block" src="/static/media/{{ prop_img.image.name }}" alt="{{ prop_img.short_description }}">
                                 <div class="carousel-caption d-none d-md-block">

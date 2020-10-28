@@ -40,10 +40,8 @@ def filter_properties(city_id, capacity, date): # FALTARIA AGREGAR FILTRO X FECH
 
 def property_data(request, property_id):
     prop = get_object_or_404(Property, pk=property_id)
-    prop_img = PropertyImage.objects.filter(property__id=prop.id)
     context = {
         'property': prop,
-        'property_images': prop_img,
         'capacity': range(1, prop.capacity + 1)
     }
     return render(request, 'rental/propertyData.html', context)
