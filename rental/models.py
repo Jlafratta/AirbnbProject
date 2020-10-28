@@ -23,7 +23,7 @@ class Property(models.Model):
 class PropertyImage(models.Model):
     property = models.ForeignKey(Property, related_name='images', on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="properties", null=True)
-    short_description = models.CharField(max_length=70, default=None, null=True)
+    short_description = models.CharField(max_length=70, default=None, null=True, blank=True)
 
     def __str__(self):
         return self.image.name

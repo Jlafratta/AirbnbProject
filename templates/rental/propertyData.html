@@ -10,30 +10,33 @@
             <div class="card">
                 <div class="card-header">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
                         <ol class="carousel-indicators">
-                            {% for prop_img in property_images %}
+                            {% for prop_img in property.images.all %}
                                 <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %} active {% endif %}"></li>
                             {% endfor %}
                         </ol>
 
                         <div class="carousel-inner" role="listbox">
                             {% for prop_img in property.images.all %}
-                            <div class="carousel-item {% if forloop.first %} active {% endif %}">
-                                <img class="d-block" src="/static/media/{{ prop_img.image.name }}" alt="{{ prop_img.short_description }}">
+                            <div class="carousel-item {% if forloop.first %} active {% endif %} max-prop-img">
+                                <img class="d-block img-fluid" src="/static/media/{{ prop_img.image.name }}" alt="{{ prop_img.short_description }}">
                                 <div class="carousel-caption d-none d-md-block">
-                                  <h5>{{ prop_img.short_description }}</h5>
+                                  <h5>{% if prop_img.short_description %} {{ prop_img.short_description }} {% endif %}</h5>
                                 </div>
                             </div>
                             {% empty %}
                                 <img class="d-block" src="/static/img/picture-not-available.jpg" alt="Imagen no disponible">
                             {% endfor %}
                         </div>
+
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                           <i class="now-ui-icons arrows-1_minimal-left"></i>
                         </a>
                         <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
                           <i class="now-ui-icons arrows-1_minimal-right"></i>
                         </a>
+
                       </div>
                 </div>
                 <div class="card-body">
