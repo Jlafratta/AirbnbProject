@@ -63,13 +63,14 @@
                     {% if total_price %}
                     <form action = "{% url 'rental:createReservation' property.id %}" method = "POST"> 
                         {% csrf_token %}
+                        <p>Fechas a reservar</p>
                         {% for date in reservation_dates %}
                             <label>
-                                <input type="checkbox" name="reservation_dates[]" value="{{ date }}" disabled checked> {{ date }}
-                            </label>
+                                <input type="checkbox" name="reservation_dates[]" value="{{ date }}" checked> {{ date }}
+                            </label><br>
                         {% endfor %}
 
-
+                            <hr>
                             <div class="row d-flex justify-content-between mt-2">
                                 <div class="col-md-6">
                                     <p class="text-left text-muted mb-1">{{ nights }} noches</p>
@@ -128,10 +129,18 @@
                     {% else %}
                     <form action = "{% url 'rental:check_reservation' property.id %}" method = "POST">
                         {% csrf_token %}
-                        {% for reservation in property.reservation_dates.all %}
+                        {% for reservation_date in reservation_dates %}
+                            {% if reservation_date.reservation %}   <!-- Valido que la fecha este disponible -->
                             <label>
-                                <input type="checkbox" name="reservation_dates[]" value="{{ reservation.date }}"> {{reservation.date}}
-                            </label>
+                                <input type="checkbox" name="reservation_dates[]" value="" disabled> {{reservation_date.date}} (Reservado)
+                            </label><br>
+                            {% else %}
+                            <label>
+                                <input type="checkbox" name="reservation_dates[]" value="{{ reservation_date.date }}"> {{reservation_date.date}}
+                            </label><br>
+                            {% endif %}
+                        {% empty %}
+                            <p>No se encontraron dias disponibles</p>
                         {% endfor %}
 
 

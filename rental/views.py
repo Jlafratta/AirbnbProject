@@ -44,8 +44,12 @@ def filter_properties(city_id, capacity, date):  # Metodo de filtrado (falta que
 
 def property_data(request, property_id):
     prop = get_object_or_404(Property, pk=property_id)
+    # Me traigo las reservation dates con fecha limitada al dia de hoy en adelante
+    reservation_dates = ReservationDate.objects.filter(date__gte=datetime.datetime.now().date()).filter(property=prop)
+
     context = {
         'property': prop,
+        'reservation_dates': reservation_dates
     }
     return render(request, 'rental/propertyData.html', context)
 
@@ -57,7 +61,7 @@ def check_reservation(request, property_id):
     nights = len(reservation_dates)
     price = p.daily_price * nights
     tax = price * 0.08
-    total_price = tax + price
+    total_price = float(tax + price)
 
     context = {
         'property': p,
@@ -78,23 +82,17 @@ def create_reservation(request, property_id):
     r.save()
 
     reservation_dates = request.POST.getlist('reservation_dates[]')
+    total = request.POST['total_price']
 
     for reservation_date in reservation_dates:
-        rd = ReservationDate.objects.get(date=datetime.datetime.strptime(reservation_date, "%d%m%Y").date(),
-                                         property=p)
+        # EL PROBLEMA ES PARSEAR BIEN EL DATE QUE EN EL ARRAY VIENE COMO '10 Nov. 2020'
+        rd = ReservationDate.objects.get(date=datetime.datetime(2020, 11, 10), property=p)
         rd.reservation = r
         rd.save()
 
-    total = request.POST['total_price']
+    # total = request.POST['total_price']
 
     r.total_price = total
     r.save()
 
-
-
-
-
     return index(request)
-
-
-
