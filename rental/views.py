@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from locations.models import City
 from .models import Property
+from .models import Reservation
+import datetime
+from .models import ReservationDate
 from .models import PropertyImage
 
 
@@ -48,7 +51,17 @@ def property_data(request, property_id):
     }
     return render(request, 'rental/propertyData.html', context)
 
+def createReservation(request,propertyId):
+    p= Property.objects.get(pk = propertyId )
 
+    r = Reservation(date=datetime.datetime.now().date(),code = "xxxx", property=p)
+    r.total = r.property.daily_price * request.POST['ReservationDateIds'].count()
+    r.save()
+
+    for reservationDateId in request.POST['ReservationDateIds'] :
+        rd = ReservationDates.objects.get(pk = reservationDateId )
+        rd.reserva = r
+        rd.save()
 
 
 
