@@ -132,11 +132,11 @@
                         {% for reservation_date in reservation_dates %}
                             {% if reservation_date.reservation %}   <!-- Valido que la fecha este disponible -->
                             <label>
-                                <input type="checkbox" name="reservation_dates[]" value="" disabled> {{reservation_date.date}} (Reservado)
+                                <input type="checkbox" name="reservation_dates[]" value="" disabled> {{reservation_date.date|date:'d/m/Y'}} (Reservado)
                             </label><br>
                             {% else %}
                             <label>
-                                <input type="checkbox" name="reservation_dates[]" value="{{ reservation_date.date }}"> {{reservation_date.date}}
+                                <input type="checkbox" name="reservation_dates[]" value="{{ reservation_date.date|date:'d/m/Y' }}"> {{reservation_date.date|date:'d/m/Y'}}
                             </label><br>
                             {% endif %}
                         {% empty %}

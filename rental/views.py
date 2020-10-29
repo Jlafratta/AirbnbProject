@@ -85,8 +85,8 @@ def create_reservation(request, property_id):
     total = request.POST['total_price']
 
     for reservation_date in reservation_dates:
-        # EL PROBLEMA ES PARSEAR BIEN EL DATE QUE EN EL ARRAY VIENE COMO '10 Nov. 2020'
-        rd = ReservationDate.objects.get(date=datetime.datetime(2020, 11, 10), property=p)
+        # Manejo de fechas en formato 'dd/mm/YYYY'
+        rd = ReservationDate.objects.get(date=datetime.datetime.strptime(reservation_date, "%d/%m/%Y").date(), property=p)
         rd.reservation = r
         rd.save()
 
