@@ -4,7 +4,6 @@ from .models import Property
 from .models import Reservation
 import datetime
 from .models import ReservationDate
-from .models import PropertyImage
 
 
 # Create your views here.
@@ -47,21 +46,55 @@ def property_data(request, property_id):
     prop = get_object_or_404(Property, pk=property_id)
     context = {
         'property': prop,
-        'capacity': range(1, prop.capacity + 1)
     }
     return render(request, 'rental/propertyData.html', context)
 
-def createReservation(request,propertyId):
-    p= Property.objects.get(pk = propertyId )
 
-    r = Reservation(date=datetime.datetime.now().date(),code = "xxxx", property=p)
-    r.total = r.property.daily_price * request.POST['ReservationDateIds'].count()
+def check_reservation(request, property_id):
+    p = Property.objects.get(pk=property_id)
+    reservation_dates = request.POST.getlist('reservation_dates[]')
+
+    nights = len(reservation_dates)
+    price = p.daily_price * nights
+    tax = price * 0.08
+    total_price = tax + price
+
+    context = {
+        'property': p,
+        'nights': nights,
+        'price': price,
+        'tax': tax,
+        'total_price': int(total_price),
+        'reservation_dates': reservation_dates
+    }
+    return render(request, 'rental/propertyData.html', context)
+
+
+def create_reservation(request, property_id):
+
+    p = Property.objects.get(pk=property_id)
+
+    r = Reservation(date=datetime.datetime.now().date(), code="xxxx", property=p)
     r.save()
 
-    for reservationDateId in request.POST['ReservationDateIds'] :
-        rd = ReservationDates.objects.get(pk = reservationDateId )
-        rd.reserva = r
+    reservation_dates = request.POST.getlist('reservation_dates[]')
+
+    for reservation_date in reservation_dates:
+        rd = ReservationDate.objects.get(date=datetime.datetime.strptime(reservation_date, "%d%m%Y").date(),
+                                         property=p)
+        rd.reservation = r
         rd.save()
+
+    total = request.POST['total_price']
+
+    r.total_price = total
+    r.save()
+
+
+
+
+
+    return index(request)
 
 
 

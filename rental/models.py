@@ -41,7 +41,7 @@ class Reservation(models.Model):
 
 class ReservationDate(models.Model):
     date = models.DateField(null=True)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=True)
+    property = models.ForeignKey(Property, related_name='reservation_dates', on_delete=models.CASCADE, null=True)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
