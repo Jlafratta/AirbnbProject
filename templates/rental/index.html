@@ -4,24 +4,27 @@
 
 {% block content %}
 
-<form action="{% url 'rental:filter_by' %}" method="post" class="form-inline d-flex justify-content-center">
-{% csrf_token %}
-  <!--<div class="col-sm-2 mt-1">
-    <div class="input-group ">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="now-ui-icons users_single-02"></i>
-        </span>
-        <label for="city">Ciudad</label>
-        <select name="city_id" id="city" class="form-control">
-          <option value="">Seleccionar ciudad ...</option>
-          {% for city in cities %}
-          <option value="{{ city.id }}">{{ city.name }}</option>
-          {% endfor %}
-        </select>
+{% if error %}
+        <!-- Muestro el error en una notification -->
+
+    <div class="alert alert-danger" role="alert">
+      <div class="container">
+        <div class="alert-icon">
+          <i class="now-ui-icons ui-1_bell-53"></i>
+        </div>
+        <strong>Error!</strong> {{ error }}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </span>
+        </button>
       </div>
     </div>
-  </div> -->
+
+{% endif %}
+
+<form action="{% url 'rental:filter_by' %}" method="post" class="form-inline d-flex justify-content-center">
+{% csrf_token %}
 
   <div class="col-sm-3 col-lg-2 inline-form-margin">
     <div class="input-group">
@@ -60,14 +63,6 @@
       <input id="to" type="date" class="form-control" name="to">
     </div>
   </div>
-
-  <!--
-  <div class="form-group col-sm-2 mt-1">
-   <label for="price" >Precio</label>
-    <input id="price" type="number" class="form-control" placeholder="Precio" name="max_price">
-  </div>
-  -->
-
 
   <div>
     <button type="submit" class="btn btn-danger btn-round font-weight-bold text-uppercase"> <i class="now-ui-icons ui-1_zoom-bold font-weight-bold"></i> Buscar </button>

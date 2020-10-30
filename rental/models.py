@@ -6,6 +6,8 @@ from AirbnbProject import settings
 # Create your models here.
 
 from django.contrib.auth.models import AbstractUser
+import datetime
+import hashlib
 
 
 class User(AbstractUser):
@@ -40,13 +42,25 @@ class PropertyImage(models.Model):
 
 
 class Reservation(models.Model):
+
     total_price = models.FloatField(default=0.0)
     date = models.DateField(null=True)
-    code = models.CharField(max_length=10, default='')
+
+    code = models.CharField(max_length=16, default='')
+    first_name = models.CharField(max_length=100, default='')
+    last_name = models.CharField(max_length=100, default='')
+    email = models.EmailField(default='')
+
     property = models.ForeignKey(Property, related_name='reservations', on_delete=models.CASCADE, default=None)
 
     def __str__(self):
-        return self.code
+        return f"Titular: {self.first_name} {self.last_name}"
+
+    def set_code(self):
+        self.code = hashlib.md5(f"{self.email}{self.date}".encode("utf-8")).digest()    # hash de 16
+
+    def set_date(self):
+        self.date = datetime.datetime.now().date()
 
 
 class ReservationDate(models.Model):

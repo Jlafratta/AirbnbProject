@@ -61,12 +61,29 @@
                 </div>
                 <div class="card-body">
                     {% if total_price %}
-                    <form action = "{% url 'rental:createReservation' property.id %}" method = "POST"> 
+                    <form action = "{% url 'rental:createReservation' property.id %}" method = "POST">
                         {% csrf_token %}
+                        <p>Datos personales</p>
+
+                        <div class="mt-3">
+                            <label for="first_name">Nombre </label>
+                            <input type="text" id="first_name" name="first_name" class="form-control" required>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="last_name">Apellido</label>
+                            <input type="text" id="last_name" name="last_name" class="form-control" required>
+                        </div>
+                        <div class="mt-3">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        <hr>
                         <p>Fechas a reservar</p>
                         {% for date in reservation_dates %}
                             <label>
-                                <input type="checkbox" name="reservation_dates[]" value="{{ date }}" checked> {{ date }}
+                                <input type="checkbox" name="reservation_dates[]" value="{{ date }}" checked hidden> {{ date }}
                             </label><br>
                         {% endfor %}
 
@@ -98,32 +115,7 @@
                                 </div>
                             </div>
 
-                       <!-- <hr>
-                        <div class="row d-flex justify-content-between mt-2">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted mb-1">2 noches</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right mb-1">$ 7500</p>  
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-between mt-1">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted mb-1">Com. 8%</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right mb-1">$ 600</p>  
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row d-flex justify-content-between mt-1">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted"><strong>Total</strong></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right"><strong>$ 8100</strong></p>  
-                            </div>
-                        </div> -->
+
                         <button class="btn btn-danger btn-lg btn-block mb-1">Reservar</button>
                     </form>
                     {% else %}
@@ -143,33 +135,6 @@
                             <p>No se encontraron dias disponibles</p>
                         {% endfor %}
 
-
-                       <!-- <hr>
-                        <div class="row d-flex justify-content-between mt-2">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted mb-1">2 noches</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right mb-1">$ 7500</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-between mt-1">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted mb-1">Com. 8%</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right mb-1">$ 600</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row d-flex justify-content-between mt-1">
-                            <div class="col-md-6">
-                                <p class="text-left text-muted"><strong>Total</strong></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right"><strong>$ 8100</strong></p>
-                            </div>
-                        </div> -->
                         <button class="btn btn-danger btn-lg btn-block mb-1">Consultar</button>
                     </form>
                     {% endif %}

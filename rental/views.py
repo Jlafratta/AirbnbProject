@@ -14,12 +14,13 @@ def home(request):  # Redirecciona a /rental al ingresar al index principal del 
 
 
 # Create your views here.
-def index(request):
+def index(request, error=''):
     cities = City.objects.order_by('name')
     properties = Property.objects.all()
     context = {
         'cities': cities,
-        'properties': properties
+        'properties': properties,
+        'error': error
     }
     return render(request, 'rental/index.html', context)
 
@@ -62,44 +63,62 @@ def property_data(request, property_id):
 
 
 def check_reservation(request, property_id):
-    p = Property.objects.get(pk=property_id)
-    reservation_dates = request.POST.getlist('reservation_dates[]')
+    if request.method == 'POST':
+        p = Property.objects.get(pk=property_id)
+        reservation_dates = request.POST.getlist('reservation_dates[]')
 
-    nights = len(reservation_dates)
-    price = p.daily_price * nights
-    tax = price * 0.08
-    total_price = float(tax + price)
+        nights = len(reservation_dates)
+        price = p.daily_price * nights
+        tax = price * 0.08
+        total_price = float(tax + price)
 
-    context = {
-        'property': p,
-        'nights': nights,
-        'price': price,
-        'tax': tax,
-        'total_price': int(total_price),
-        'reservation_dates': reservation_dates
-    }
+        context = {
+            'property': p,
+            'nights': nights,
+            'price': price,
+            'tax': tax,
+            'total_price': int(total_price),
+            'reservation_dates': reservation_dates
+        }
     return render(request, 'rental/propertyData.html', context)
 
 
+def confirm_reservation(request, property_id):
+    return render(request, 'rental/confirm.html')
+
+
 def create_reservation(request, property_id):
+    if request.method == 'POST':
 
-    p = Property.objects.get(pk=property_id)
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
 
-    r = Reservation(date=datetime.datetime.now().date(), code="xxxx", property=p)
-    r.save()
+        p = Property.objects.get(pk=property_id)
 
-    reservation_dates = request.POST.getlist('reservation_dates[]')
-    total = request.POST['total_price']
+        try:
+            r = Reservation(property=p, first_name=first_name, last_name=last_name, email=email)
+            r.set_code()
+            r.set_date()
+            r.save()
 
-    for reservation_date in reservation_dates:
-        # Manejo de fechas en formato 'dd/mm/YYYY'
-        rd = ReservationDate.objects.get(date=datetime.datetime.strptime(reservation_date, "%d/%m/%Y").date(), property=p)
-        rd.reservation = r
-        rd.save()
+            reservation_dates = request.POST.getlist('reservation_dates[]')
+            total = request.POST['total_price']
 
-    # total = request.POST['total_price']
+            for reservation_date in reservation_dates:
+                # Manejo de fechas en formato 'dd/mm/YYYY'
+                rd = ReservationDate.objects.get(date=datetime.datetime.strptime(reservation_date, "%d/%m/%Y").date(), property=p)
+                if rd.reservation:
+                    raise ValueError
+                rd.reservation = r
+                rd.save()
 
-    r.total_price = total
-    r.save()
+            r.total_price = total
+            r.save()
+        except ReservationDate.MultipleObjectsReturned:     # Esto vuela una vez que se limite el repetir fechas de reservation_dates
+            return index(request, "Mas de una reserva con la misma fecha")
+        except ValueError:
+            return index(request, "Reserva ocupada")
 
-    return index(request)
+    return HttpResponseRedirect(reverse('rental:index',))
+    # Redirecciono para limpiar la url que q no se pueda refrescar el formulario
