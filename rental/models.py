@@ -1,9 +1,17 @@
 from django.db import models
-from django.contrib import admin
 from services.models import Service
 from locations.models import City
+from AirbnbProject import settings
 
 # Create your models here.
+
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    pass
+    # class Meta:
+    #    app_label = 'auth'
 
 
 class Property(models.Model):
@@ -15,6 +23,8 @@ class Property(models.Model):
     # FK que vincula con City
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     services = models.ManyToManyField(Service, blank=True)
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True)
 
     def __str__(self):
         return self.title
@@ -48,19 +58,7 @@ class ReservationDate(models.Model):
         return f"Reserva: {self.date}"
 
 
-class ReservationDateInline(admin.TabularInline):
-    model = ReservationDate
-    fk_name = 'property'
-    max_num = 7
 
 
-class PropertyImageInline(admin.TabularInline):
-    model = PropertyImage
-    fk_name = 'property'
-    max_num = 10
-
-
-class PropertyAdmin(admin.ModelAdmin):
-    inlines = [ReservationDateInline, PropertyImageInline, ]
 
 
