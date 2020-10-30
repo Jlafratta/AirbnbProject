@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+
 from locations.models import City
 from .models import Property
 from .models import Reservation
-import datetime
 from .models import ReservationDate
+
+
+def home(request):  # Redirecciona a /rental al ingresar al index principal del proyecto
+    return HttpResponseRedirect(reverse('rental:index'))
 
 
 # Create your views here.

@@ -30,7 +30,7 @@ class PropertyAdmin(admin.ModelAdmin):
 
     # readonly_fields = ('user',)
 
-    def save_model(self, request, obj, form, change):   # setea el campo user de property automagicamente al guardarlo
+    def save_model(self, request, obj, form, change):   # setea el campo user de property automagicamente al guardarlocament
         if not request.user.is_superuser:
             obj.user = request.user
             super(PropertyAdmin, self).save_model(request, obj, form, change)
