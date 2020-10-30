@@ -8,6 +8,8 @@ from AirbnbProject import settings
 from django.contrib.auth.models import AbstractUser
 import datetime
 import hashlib
+from django.dispatch import receiver
+import os
 
 
 class User(AbstractUser):
@@ -39,6 +41,20 @@ class PropertyImage(models.Model):
 
     def __str__(self):
         return self.image.name
+
+
+#  Eliminacion de los archivos de imagen una vez eliminada la property
+def _delete_file(path):
+    """ Deletes file from filesystem. """
+    if os.path.isfile(path):
+        os.remove(path)
+
+
+@receiver(models.signals.post_delete, sender=PropertyImage)
+def delete_file(sender, instance, *args, **kwargs):
+    """ Deletes image files on `post_delete` """
+    if instance.image:
+        _delete_file(instance.image.path)
 
 
 class Reservation(models.Model):
