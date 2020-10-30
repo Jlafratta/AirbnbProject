@@ -29,25 +29,29 @@ class PropertyAdmin(admin.ModelAdmin):
     inlines = [ReservationDateInline, PropertyImageInline, ]
 
     # readonly_fields = ('user',)
+    # exclude = ('user', )
 
     def save_model(self, request, obj, form, change):   # setea el campo user de property automagicamente al guardarlocament
         if not request.user.is_superuser:
             obj.user = request.user
             super(PropertyAdmin, self).save_model(request, obj, form, change)
+        else:
+            pass
 
     def get_queryset(self, request):
         qs = super(PropertyAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-
-        self.readonly_fields = ('user',)    # si el que agrega la property es un anfitrion, no deja elegir el propietario
-        property_ct = ContentType.objects.get_for_model(Property)
-        log_entries = LogEntry.objects.filter(
-            content_type=property_ct,
-            user=request.user,
-            action_flag=ADDITION
-        )
-        user_property_ids = [a.object_id for a in log_entries]
+        else:
+            self.exclude = ('user',)    # Oculta el campo user para los anfitriones
+            # self.readonly_fields = ('user',)    # si el que agrega la property es un anfitrion, no deja elegir el campo
+            property_ct = ContentType.objects.get_for_model(Property)
+            log_entries = LogEntry.objects.filter(
+                content_type=property_ct,
+                user=request.user,
+                action_flag=ADDITION
+            )
+            user_property_ids = [a.object_id for a in log_entries]
         return qs.filter(id__in=user_property_ids)
 
 

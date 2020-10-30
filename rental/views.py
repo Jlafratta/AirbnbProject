@@ -67,20 +67,23 @@ def check_reservation(request, property_id):
         p = Property.objects.get(pk=property_id)
         reservation_dates = request.POST.getlist('reservation_dates[]')
 
-        nights = len(reservation_dates)
-        price = p.daily_price * nights
-        tax = price * 0.08
-        total_price = float(tax + price)
+        if reservation_dates:   # Si selecciono fechas
+            nights = len(reservation_dates)
+            price = p.daily_price * nights
+            tax = price * 0.08
+            total_price = float(tax + price)
 
-        context = {
-            'property': p,
-            'nights': nights,
-            'price': price,
-            'tax': tax,
-            'total_price': int(total_price),
-            'reservation_dates': reservation_dates
-        }
-    return render(request, 'rental/propertyData.html', context)
+            context = {
+                'property': p,
+                'nights': nights,
+                'price': price,
+                'tax': tax,
+                'total_price': int(total_price),
+                'reservation_dates': reservation_dates
+            }
+            return render(request, 'rental/propertyData.html', context)
+        else:   # Sino, refresca la pagina
+            return property_data(request, property_id)
 
 
 def confirm_reservation(request, property_id):
