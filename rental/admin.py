@@ -25,13 +25,22 @@ class PropertyImageInline(admin.TabularInline):
 
 
 class PropertyAdmin(admin.ModelAdmin):
+
     inlines = [ReservationDateInline, PropertyImageInline, ]
+
+    # readonly_fields = ('user',)
+
+    def save_model(self, request, obj, form, change):   # setea el campo user de property automagicamente al guardarlo
+        if not request.user.is_superuser:
+            obj.user = request.user
+            super(PropertyAdmin, self).save_model(request, obj, form, change)
 
     def get_queryset(self, request):
         qs = super(PropertyAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
 
+        self.readonly_fields = ('user',)    # si el que agrega la property es un anfitrion, no deja elegir el propietario
         property_ct = ContentType.objects.get_for_model(Property)
         log_entries = LogEntry.objects.filter(
             content_type=property_ct,
@@ -43,6 +52,8 @@ class PropertyAdmin(admin.ModelAdmin):
 
 
 class ReservationAdmin(admin.ModelAdmin):
+
+    readonly_fields = ('property', )
 
     def get_queryset(self, request):
         qs = super(ReservationAdmin, self).get_queryset(request)
