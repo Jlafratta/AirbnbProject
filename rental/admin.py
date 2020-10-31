@@ -34,9 +34,9 @@ class PropertyAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):   # setea el campo user de property automagicamente al guardarlocament
         if not request.user.is_superuser:
             obj.user = request.user
-            super(PropertyAdmin, self).save_model(request, obj, form, change)
-        else:
-            pass
+
+        super(PropertyAdmin, self).save_model(request, obj, form, change)
+
 
     def get_queryset(self, request):
         qs = super(PropertyAdmin, self).get_queryset(request)
