@@ -142,8 +142,6 @@ def create_reservation(request, property_id):
 
             r.total_price = total
             r.save()
-        except ReservationDate.MultipleObjectsReturned:     # Esto vuela una vez que se limite el repetir fechas de reservation_dates
-            return index(request, "Mas de una reserva con la misma fecha")
         except ValueError:
             return index(request, "Reserva ocupada")
 
