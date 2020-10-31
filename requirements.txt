@@ -28,6 +28,7 @@ Usuarios:
 Aclaraciones:
 
         En la consulta de fechas disponibles de reserva y en los filtros, las fechas antiguas no seran visibles.
+        Para ejecutar la aplicacion solo usar el comando "python manage.py runserver"
 
 
 Integrantes:
