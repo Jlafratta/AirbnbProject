@@ -3,4 +3,40 @@ Django~=2.2
 Librerias agregadas al proyecto:
 
     -   Pillow: manejo de imagenes para las Propiedades
-        -> "pip install Pillow""
+        -> "pip install Pillow"
+
+
+Usuarios:
+
+    - Administrador (Super user)
+
+        Usuario: admin
+        Password: admin
+
+    - Owners (Propietarios)
+
+        Usuario: Julian
+        Password: LAQUEANDA123
+
+        Usuario: NicoP
+        Password: LAQUEANDA123
+
+        Usuario: Nicolas
+        Password: LAQUEANDA123
+
+
+Aclaraciones:
+
+        En la consulta de fechas disponibles de reserva y en los filtros, las fechas antiguas no seran visibles.
+
+
+Integrantes:
+
+    -   Garcia, Franco Nicolas
+    -   Lafratta, Julian
+    -   Pafundi, Nicolas
+
+
+Repositorio:
+
+    -   https://github.com/Jlafratta/AirbnbProject

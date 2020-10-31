@@ -37,7 +37,6 @@ class PropertyAdmin(admin.ModelAdmin):
 
         super(PropertyAdmin, self).save_model(request, obj, form, change)
 
-
     def get_queryset(self, request):
         qs = super(PropertyAdmin, self).get_queryset(request)
         self.readonly_fields = ()
