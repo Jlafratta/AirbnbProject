@@ -83,6 +83,8 @@ class ReservationDate(models.Model):
     date = models.DateField(null=True)
     property = models.ForeignKey(Property, related_name='reservation_dates', on_delete=models.CASCADE, null=True)
     reservation = models.ForeignKey(Reservation, related_name='r_dates', on_delete=models.SET_NULL, blank=True, null=True)
+    class Meta:
+        unique_together = ('date', 'property',)
 
     def __str__(self):
         return f"Reserva: {self.date}"

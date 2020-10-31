@@ -28,7 +28,7 @@ def index(request, error=''):
 def filter_by(request):
 
     if request.method == 'POST':
-        properties = filter_properties(request.POST['city_id'], request.POST['capacity'], request.POST['date'])
+        properties = filter_properties(request.POST['city_id'], request.POST['capacity'], request.POST['dateFrom'], request.POST['dateTo'])
     else:
         properties = Property.objects.all()     # Si hay falla en el metodo del formulario, no filtra
 
@@ -39,15 +39,16 @@ def filter_by(request):
     return render(request, 'rental/index.html', context)
 
 
-def filter_properties(city_id, capacity, date):  # Metodo de filtrado (falta que filtre por fecha)
-    if city_id and capacity:
-        return Property.objects.filter(city__id=city_id).filter(capacity=capacity)
-    elif city_id:
-        return Property.objects.filter(city__id=city_id)
-    elif capacity:
-        return Property.objects.filter(capacity=capacity)
-    else:
-        return Property.objects.all()   # Si no envia ningun filtro, devuelte todas
+def filter_properties(city_id, capacity, dateFrom=None, dateTo=None):  # Metodo de filtrado (falta que filtre por fecha)
+    properties = Property.objects.all()
+    if(city_id):
+        properties = properties.filter(city__id = city_id)
+    if(capacity):
+        properties = properties.filter(capacity = capacity)
+    if(dateFrom and dateTo):
+        reservationDates = ReservationDate.objects.filter(property__in = properties ,date__gte=datetime.datetime.now().date(),date__range=(dateFrom, dateTo), reservation = None)
+        properties = properties.filter(reservation_dates__in = reservationDates).distinct()
+    return properties
 
 
 def property_data(request, property_id):

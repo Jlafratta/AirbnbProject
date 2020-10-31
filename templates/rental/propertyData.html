@@ -60,7 +60,7 @@
                     </nav>
                 </div>
                 <div class="card-body">
-                    {% if total_price %}
+                    {% if not total_price == None %}
                     <form action = "{% url 'rental:createReservation' property.id %}" method = "POST">
                         {% csrf_token %}
                         <p>Datos personales</p>

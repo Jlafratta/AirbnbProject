@@ -40,21 +40,21 @@ class PropertyAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(PropertyAdmin, self).get_queryset(request)
+        self.readonly_fields = ()
+
         if request.user.is_superuser:
             return qs
-        else:
-            self.exclude = ('user',)    # Oculta el campo user para los anfitriones
-            # self.readonly_fields = ('user',)    # si el que agrega la property es un anfitrion, no deja elegir el campo
-            property_ct = ContentType.objects.get_for_model(Property)
-            log_entries = LogEntry.objects.filter(
-                content_type=property_ct,
-                user=request.user,
-                action_flag=ADDITION
-            )
-            user_property_ids = [a.object_id for a in log_entries]
+
+        self.readonly_fields = ('user',)    # si el que agrega la property es un anfitrion, no deja elegir el campo
+
+        property_ct = ContentType.objects.get_for_model(Property)
+        log_entries = Property.objects.filter(
+            user=request.user
+        )
+        user_property_ids = [a.id for a in log_entries]
         return qs.filter(id__in=user_property_ids)
 
-
+        
 class ReservationAdmin(admin.ModelAdmin):
 
     readonly_fields = ('property', )
