@@ -34,7 +34,7 @@
       <select name="city_id" id="city" class="form-control">
         <option value="">Seleccionar ciudad ...</option>
         {% for city in cities %}
-        <option value="{{ city.id }}">{{ city.name }}</option>
+            <option value="{{ city.id }}"  {% if cityId == city.id %} selected {% endif %}>{{ city.name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -44,7 +44,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
       </div>
-      <input id="capacity" type="number" class="form-control" placeholder="Cantidad de huespedes" name="capacity">
+      <input id="capacity" type="number" {% if capacity %} value = "{{capacity}}" {% endif %} class="form-control" placeholder="Cantidad de huespedes" name="capacity">
     </div>
   </div>
   <div class="col-sm-3 col-lg-2 inline-form-margin">
@@ -52,7 +52,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="now-ui-icons arrows-1_minimal-up"></i></span>
       </div>
-      <input id="dateFrom" type="date" class="form-control" name="dateFrom">
+      <input id="dateFrom" type="date" {% if dateFrom %} value = "{{dateFrom|date:'Y-m-d' }}" {% endif %} class="form-control" name="dateFrom">
     </div>
   </div>
   <div class="col-sm-3 col-lg-2 inline-form-margin">
@@ -60,7 +60,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="now-ui-icons arrows-1_minimal-down"></i></span>
       </div>
-      <input id="dateTo" type="date" class="form-control" name="dateTo">
+      <input id="dateTo" type="date" {% if dateTo %} value = "{{dateTo|date:'Y-m-d' }}" {% endif %} class="form-control" name="dateTo">
     </div>
   </div>
 

@@ -28,13 +28,36 @@ def index(request, error=''):
 def filter_by(request):
 
     if request.method == 'POST':
-        properties = filter_properties(request.POST['city_id'], request.POST['capacity'], request.POST['dateFrom'], request.POST['dateTo'])
+        cityId = request.POST['city_id']
+        capacity = request.POST['capacity']
+        dateFrom = request.POST['dateFrom']
+        dateTo = request.POST['dateTo']
+    
+        properties = filter_properties(cityId, capacity, dateFrom, dateTo)
     else:
         properties = Property.objects.all()     # Si hay falla en el metodo del formulario, no filtra
 
+
+    if cityId == '':
+        cityId = 0
+    if capacity == '':
+        capacity = 0
+    if dateFrom == '':
+        dateFrom = 0
+    else:
+        dateFrom = datetime.datetime.strptime(dateFrom,"%Y-%m-%d").date()
+    if dateTo == '':
+        dateTo = 0
+    else:
+        dateTo = datetime.datetime.strptime(dateTo,"%Y-%m-%d").date()
+
     context = {
         'cities': City.objects.order_by('name'),
-        'properties': properties
+        'properties': properties,
+        'cityId' : int(cityId),
+        'capacity' : capacity,
+        'dateFrom' : dateFrom,
+        'dateTo' : dateTo
     }
     return render(request, 'rental/index.html', context)
 
